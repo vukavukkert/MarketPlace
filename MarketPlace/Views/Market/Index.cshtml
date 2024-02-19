@@ -1,0 +1,28 @@
+﻿@model IEnumerable<MarketPlace.DAL.Entities.Item> 
+
+<!doctype html>
+<html>
+    <head>
+        <title>Hello</title>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <h2>Index</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Id</th>
+            </tr>
+        
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Id</td>
+                </tr>
+            }
+        </table>
+    </body>
+</html>
