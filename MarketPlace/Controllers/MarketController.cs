@@ -32,6 +32,14 @@ namespace MarketPlace.Controllers
             ViewBag.Vendors = new SelectList(vendors, "Id", "Name");
             return View();
         }
+        //post: Market/Create
+        /*[HttpPost]
+        public async Task<IActionResult> Create()
+        {
+            var vendors = await Db.Vendors.ToListAsync();
+            ViewBag.Vendors = new SelectList(vendors, "Id", "Name");
+            return View();
+        }*/
         //get: Market/Deatails
         public async Task<IActionResult> Details(int? id)
         {

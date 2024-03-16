@@ -1,8 +1,7 @@
 ﻿@model MarketDataBase.Entities.Item
 
-<h4>Item</h4>
-<hr />
-<div class="row">
+
+@* <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Create", "Market", FormMethod.Post))
         {
@@ -24,8 +23,38 @@
         }
         
     </div>
-</div>
+</div> *@
+<div class="flex-column center">
+    <h1>Create item</h1>
+    @using (Html.BeginForm("Create", "Market", FormMethod.Post, 
+        new { @class = "flex-column center create-form" }))
+    {
+        <input type="image" src="../src/images/UI/png/placeholder.png" class="shadow"/>
+        <p>Add Image</p>
+        <div style="height: 1vw;"></div>
+        @Html.LabelFor(Model => Model.Name)
+        @Html.TextBoxFor(Model => Model.Name, new {@class ="input"})
+        @Html.ValidationMessageFor(Model => Model.Name)
 
+        @Html.LabelFor(Model => Model.Description)
+        @Html.TextBoxFor(Model => Model.Description, new { @class = "input" })
+        @Html.ValidationMessageFor(Model => Model.Description)
+
+        @Html.LabelFor(Model => Model.Vendor)
+        @Html.DropDownList("VendorId", ViewBag.Vendors as SelectList, "Select a vendor", new {@class ="input"})
+        @Html.ValidationMessageFor(Model => Model.Vendor)
+
+        @Html.LabelFor(Model => Model.Price)
+        @Html.TextBoxFor(Model => Model.Price, new { @class = "input", @type = "number" })
+        @Html.ValidationMessageFor(Model => Model.Price)
+
+        @Html.LabelFor(Model => Model.Amount)
+        @Html.TextBoxFor(Model => Model.Amount, new { @class = "input", @type = "number" })
+        @Html.ValidationMessageFor(Model => Model.Amount)
+
+        <button type="submit" class="button"><p>Create</p></button>
+    }
+</div>
 <div>
    @*  <a asp-action="Index">Back to List</a> *@
 </div>
