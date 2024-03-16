@@ -1,83 +1,33 @@
-﻿using MarketDataBase.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using MarketPlace.DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace MarketPlace.Controllers
 {
     public class MarketController : Controller
     {
-        private readonly MarketPlaceContext Db;
+         MarketPlaceContext db;
+
         public MarketController(MarketPlaceContext dbcontext)
         {
-            Db = dbcontext;
+            db = dbcontext;
         }
         public async Task<IActionResult> Index()
         {
-
-            return View(await Db.Items.ToListAsync());
+            return View(await db.Items.ToListAsync());
         }
 
-        public async Task<IActionResult> Search(string key)
+        public IActionResult Create()
         {
-            if (key.IsNullOrEmpty()) RedirectToAction(nameof(Index));
-            var items = await Db.Items.Where(x => x.Name.Contains(key)).ToListAsync();
-            return View(nameof(Index), items);
-        }
-        //get: Market/Create
-        public async Task<IActionResult> Create()
-        {
-            var vendors = await Db.Vendors.ToListAsync();
-            ViewBag.Vendors = new SelectList(vendors, "Id", "Name");
             return View();
         }
-        //get: Market/Deatails
-        public async Task<IActionResult> Details(int? id)
-        {
-            var item = await Db.Items.FirstOrDefaultAsync(x => x.Id == id);
-            if (item != null)
-            {
-                ViewBag.VendorName = await Db.Vendors.Where(x => x.Id == item.Vendor).Select(v => v.Name).FirstOrDefaultAsync();
-                return View(item);
-            }
-            else
-            {
-                return RedirectToAction(nameof(Index));
 
-            }
-        }
         [HttpPost]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Create(Item item)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var item = await Db.Items.FirstOrDefaultAsync(m => m.Id == id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            var orders = await Db.Orders.Where(x => x.Item == item.Id).ToListAsync();
-            if (!orders.IsNullOrEmpty())
-            {
-                foreach (var order in orders)
-                {
-                    var points = await Db.PickupPointOrders.Where(x => x.Order == order.Id).ToListAsync();
-                    foreach (var point in points)
-                    {
-                        Db.PickupPointOrders.Remove(point);
-                    }
-                    Db.Orders.Remove(order);
-
-                }
-            }
-            await Db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            db.Items.Add(item);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
-
-
     }
 }

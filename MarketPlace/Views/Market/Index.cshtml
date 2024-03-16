@@ -1,41 +1,28 @@
-﻿@using System.Data.Entity
-@model IEnumerable<MarketDataBase.Entities.Item>
+﻿@model IEnumerable<MarketPlace.DAL.Entities.Item> 
 
-@{
-    ViewData["Title"] = "GAZON";
-}
-
-<div class="cards" id="cards">
-    @foreach (var @item in Model)
-    {
-        <div class="card" id="card">
-            <img src="../src/images/Uploaded/Items/2024-03-07 19.25.58.png" alt="">
-            <div>
-                <div class="flex-row space-between">
-                    <p class="name">
-                       @item.Name
-                    </p>
-                    <p class="price">
-                        @item.Price
-                    </p>
-                </div>
-                <div>
-                    <p class="description">
-                        @item.Description
-                    </p>
-                </div>
-                @using (Html.BeginForm("Details", "Market"))
-                {
-                    <input type="hidden" name="id" value="@item.Id"/>
-                    <div class="flex-row">
-                        <button type="submit" class="button">
-                            <p>details</p>
-                        </button>
-                    </div>
-                    
-                }
-            </div>
-        </div>
-    }
-   
-</div>
+<!doctype html>
+<html>
+    <head>
+        <title>Hello</title>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <h2>Index</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Id</th>
+            </tr>
+        
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Id</td>
+                </tr>
+            }
+        </table>
+    </body>
+</html>

@@ -1,31 +1,20 @@
-﻿@model MarketDataBase.Entities.Item
+﻿@model MarketPlace.DAL.Entities.Item
 
-<h4>Item</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        @using (Html.BeginForm("Create", "Market", FormMethod.Post))
-        {
-            <div class="form-group">
-                @Html.LabelFor(Model => Model.Name)
-                @Html.TextBoxFor(Model => Model.Name)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(Model => Model.Description)
-                @Html.TextBoxFor(Model => Model.Description)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(Model => Model.Vendor)
-                @Html.DropDownList("VendorId", ViewBag.Vendors as SelectList, "Select a Vendor")
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        }
-        
-    </div>
-</div>
-
-<div>
-   @*  <a asp-action="Index">Back to List</a> *@
-</div>
+<h2>Добавление предмета</h2>
+<form asp-action="create" asp-controller="market">
+    <p>
+        <label asp-for="Name">Имя</label><br />
+        <input type="text" asp-for="Name" />
+    </p>
+    <p>
+        <label asp-for="Description">Description</label><br />
+        <input type="text" asp-for="Description" />
+    </p>
+    <p>
+        <label asp-for="Vendor">Vendor</label><br />
+        <input type="number" asp-for="Vendor" />
+    </p>
+    <p>
+        <input type="submit" value="Отправить" />
+    </p>
+</form>

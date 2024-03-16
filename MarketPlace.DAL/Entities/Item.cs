@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MarketPlace.DAL.Entities;
 
@@ -10,7 +11,6 @@ public partial class Item
 
     public string? Description { get; set; }
 
-    [DisplayName("Vendor")]
     public int Vendor { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
