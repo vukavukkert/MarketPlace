@@ -1,9 +1,8 @@
-using MarketPlace.DAL.Entities;
+using MarketDataBase.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 var connectionString = builder.Configuration.GetConnectionString("MSSQL");
 builder.Services.AddDbContext<MarketPlaceContext>(options =>
 {
@@ -12,6 +11,7 @@ builder.Services.AddDbContext<MarketPlaceContext>(options =>
 
 var app = builder.Build();
 
+app.UseStaticFiles();
 app.UseRouting();
 
 app.MapControllerRoute(

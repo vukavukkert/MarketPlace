@@ -1,0 +1,31 @@
+﻿@model MarketDataBase.Entities.Item
+
+@{
+    ViewData["Title"] = "GAZON";
+}
+
+
+<div class="item-details flex-row space-around">
+    <img src="../src/images/Uploaded/Items/2024-03-07 19.25.58.png" alt="" class="shadow">
+    <div>
+        <div class="flex-row space-between">
+            <div>
+                <p class="name">@Model.Name</p>
+                <p class="vendor-name">@ViewBag.VendorName</p>
+            </div>
+            <div class="pay-card flex-column space-around center shadow">
+                <p class="price">@Model.Price</p>
+                <button class="button">
+                    <p>Soon</p>
+                </button>
+            </div>
+        </div>
+           
+        <p class="description">
+            @Model.Description
+        </p>
+        <a asp-action="Delete" asp-controller="Market" asp-route-id="@Model.Id" style="text-decoration: underline;">Delete</a>
+        <a href="" style="text-decoration: underline;">Edit</a>
+    </div>
+            
+</div>
