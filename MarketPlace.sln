@@ -5,9 +5,7 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPlace", "MarketPlace\MarketPlace.csproj", "{FAA9F832-29D7-4040-B2B9-2EBE6214FF4C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{7C5F11BD-4B8F-4DB4-8CAF-0A207DF3DE52}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketPlace.DAL", "MarketPlace.DAL\MarketPlace.DAL.csproj", "{702D3341-06E9-46A0-9DA4-B6C393BC832E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketDataBase", "MarketDataBase\MarketDataBase.csproj", "{5B5BE3E9-7D86-43DE-8863-6C4A390D77F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +17,13 @@ Global
 		{FAA9F832-29D7-4040-B2B9-2EBE6214FF4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAA9F832-29D7-4040-B2B9-2EBE6214FF4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAA9F832-29D7-4040-B2B9-2EBE6214FF4C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{702D3341-06E9-46A0-9DA4-B6C393BC832E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{702D3341-06E9-46A0-9DA4-B6C393BC832E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{702D3341-06E9-46A0-9DA4-B6C393BC832E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{702D3341-06E9-46A0-9DA4-B6C393BC832E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B5BE3E9-7D86-43DE-8863-6C4A390D77F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B5BE3E9-7D86-43DE-8863-6C4A390D77F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B5BE3E9-7D86-43DE-8863-6C4A390D77F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B5BE3E9-7D86-43DE-8863-6C4A390D77F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{702D3341-06E9-46A0-9DA4-B6C393BC832E} = {7C5F11BD-4B8F-4DB4-8CAF-0A207DF3DE52}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8EBE5C64-3551-4CF2-90C5-64A699004C14}

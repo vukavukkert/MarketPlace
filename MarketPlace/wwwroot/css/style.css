@@ -1,0 +1,214 @@
+
+:root {
+    --color-dull-green: rgba(146, 181, 139, 1);
+    --color-pale-green: rgba(190, 219, 185, 1);
+    --color-toxic-green: rgba(179, 236, 58, 1);
+    --color-pale-white: rgba(243, 244, 233, 1);
+    --color-dark-green: rgba(58, 63, 57, 1);
+    --color-yellow-green: rgba(123, 146, 70, 1);
+    --card-width: 12vw;
+}
+
+body {
+    font-family: "Inder", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin: 0 60px 0 60px;
+    background: linear-gradient(180deg, var(--color-pale-white) 0%, white 100%);
+    ;
+}
+
+.header {
+    background: var(--color-dull-green);
+    background: linear-gradient(90deg, var(--color-toxic-green) 0%, var(--color-dull-green) 100%);
+    height: 100px;
+    border-radius: 0px 0px 30px 30px;
+    & #logo button
+
+{
+    cursor: pointer;
+}
+
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.space-around {
+    justify-content: space-around;
+}
+
+.center {
+    align-items: center;
+}
+
+.button {
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--color-toxic-green) 0%, var(--color-dull-green) 100%);
+    cursor: pointer;
+    & p
+
+{
+    text-align: center;
+    margin: 7px 15px;
+    font-size: 20px;
+}
+
+}
+
+.search-bar {
+    background-color: var(--color-pale-white);
+    border-radius: 15px;
+    & form input
+
+{
+    width: 50vw;
+    height: 100%;
+    display: block;
+    padding: 0 10px;
+}
+
+& button {
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+}
+
+.nav {
+    & button
+
+{
+    margin: 0 10px;
+    &:hover
+
+{
+    cursor: pointer;
+}
+
+}
+}
+
+.cards {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 15px 1px;
+    & .card
+
+{
+    width: var(--card-width);
+    border-radius: 8px;
+    background-color: var(--color-pale-white);
+    height: calc(var(--card-width)* 2);
+    max-height: calc(var(--card-width)* 2);
+    & img
+
+{
+    height: var(--card-width);
+    width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+& div {
+    padding: 10px;
+    & .name
+
+{
+    font-size: 22px;
+    color: var(--color-dark-green);
+}
+
+& .price {
+    font-size: 22px;
+    -webkit-text-stroke: 2px var(--color-dull-green);
+    white-space: nowrap;
+}
+
+& .description {
+    color: var(--color-yellow-green);
+    font-size: 15px;
+}
+
+& .button {
+    color: var(--color-pale-white);
+    background: linear-gradient(90deg, var(--color-toxic-green) 0%, var(--color-dull-green) 100%);
+}
+
+& div:has(.button) {
+    justify-content: end;
+}
+
+}
+}
+}
+
+.card {
+}
+
+.item-details {
+    &
+
+{
+    width: 100%;
+}
+
+& img {
+    height: 600px;
+    border-radius: 8px;
+}
+
+& .name {
+    font-size: 100px;
+}
+
+& .pay-card {
+    padding: 60px;
+    background-color: var(--color-pale-white);
+    border-radius: 25px;
+    & .price
+
+{
+    font-size: 68px;
+    font-weight: 1000;
+    color: var(--color-dull-green);
+    margin-bottom: 20px;
+}
+
+& .button {
+    width: 100%;
+}
+
+}
+
+& .vendor-name {
+    background-color: var(--color-pale-green);
+    color: var(--color-pale-white);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: end;
+}
+
+& .description {
+    margin: 60px 0;
+    max-width: 50vw;
+    font-size: 25px;
+    color: var(--color-dull-green);
+}
+
+.shadow {
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.118);
+}
+}
