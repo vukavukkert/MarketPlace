@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace MarketDataBase.Entities;
 
@@ -50,7 +48,7 @@ public partial class MarketPlaceContext : DbContext
                 .HasMaxLength(30)
                 .HasColumnName("NAME");
             entity.Property(e => e.Picture)
-                .HasMaxLength(1)
+                .HasColumnType("NVARCHAR(MAX)")
                 .HasColumnName("PICTURE");
             entity.Property(e => e.Price)
                 .HasColumnType("money")

@@ -33,13 +33,26 @@ namespace MarketPlace.Controllers
             return View();
         }
         //post: Market/Create
-        /*[HttpPost]
-        public async Task<IActionResult> Create()
+        [HttpPost]
+        public async Task<IActionResult> Create(IFormFile photo, Item item)
         {
-            var vendors = await Db.Vendors.ToListAsync();
-            ViewBag.Vendors = new SelectList(vendors, "Id", "Name");
-            return View();
-        }*/
+
+            if (photo.Length > 0)
+            {
+                var fileName = Path.GetFileName(photo.FileName);
+                var serverPath = "/src/images/Uploaded/Items/";
+                var path = Path.Combine(Environment.CurrentDirectory + "/wwwroot" + serverPath, fileName);
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await photo.CopyToAsync((fileStream));
+                }
+
+                item.Picture = serverPath + fileName;
+            }
+            Db.Items.Add(item);
+            await Db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
         //get: Market/Deatails
         public async Task<IActionResult> Details(int? id)
         {
@@ -82,6 +95,8 @@ namespace MarketPlace.Controllers
 
                 }
             }
+
+            Db.Items.Remove(item);
             await Db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

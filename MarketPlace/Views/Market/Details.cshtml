@@ -6,7 +6,15 @@
 
 
 <div class="item-details flex-row space-around">
-    <img src="../src/images/Uploaded/Items/2024-03-07 19.25.58.png" alt="" class="shadow">
+    @if (Model.Picture != null)
+    {
+        <img src="@Model.Picture" class="shadow"/>
+    }
+    else
+    {
+        <img src="/src/images/UI/png/placeholder.png" alt="" class="shadow">
+
+    }
     <div>
         <div class="flex-row space-between">
             <div>
@@ -20,12 +28,17 @@
                 </button>
             </div>
         </div>
-           
+
         <p class="description">
             @Model.Description
         </p>
-        <a asp-action="Delete" asp-controller="Market" asp-route-id="@Model.Id" style="text-decoration: underline;">Delete</a>
+        @using (@Html.BeginForm("Delete", "Market", FormMethod.Post))
+        {
+            @Html.HiddenFor(Model => Model.Id)
+            <input type="submit" style="text-decoration: underline;color: darkred;" value="Delete">
+        }
+        @* <a asp-action="Delete" asp-controller="Market" asp-route-id="@Model.Id" style="text-decoration: underline;">Delete</a> *@
         <a href="" style="text-decoration: underline;">Edit</a>
     </div>
-            
+
 </div>

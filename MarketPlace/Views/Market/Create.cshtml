@@ -27,9 +27,9 @@
 <div class="flex-column center">
     <h1>Create item</h1>
     @using (Html.BeginForm("Create", "Market", FormMethod.Post, 
-        new { @class = "flex-column center create-form" }))
+        new { @class = "flex-column center create-form", @enctype="multipart/form-data" }))
     {
-        <input type="image" src="../src/images/UI/png/placeholder.png" class="shadow"/>
+        <input type="file" name="photo" src="../src/images/UI/png/placeholder.png" accept="image/*" class="shadow" />
         <p>Add Image</p>
         <div style="height: 1vw;"></div>
         @Html.LabelFor(Model => Model.Name)
@@ -41,7 +41,7 @@
         @Html.ValidationMessageFor(Model => Model.Description)
 
         @Html.LabelFor(Model => Model.Vendor)
-        @Html.DropDownList("VendorId", ViewBag.Vendors as SelectList, "Select a vendor", new {@class ="input"})
+        @Html.DropDownListFor(Model => Model.Vendor, ViewBag.Vendors as SelectList, "Select a vendor", new {@class ="input"})
         @Html.ValidationMessageFor(Model => Model.Vendor)
 
         @Html.LabelFor(Model => Model.Price)

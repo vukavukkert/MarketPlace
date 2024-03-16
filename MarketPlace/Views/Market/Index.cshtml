@@ -1,4 +1,5 @@
 ﻿@using System.Data.Entity
+@using Humanizer
 @model IEnumerable<MarketDataBase.Entities.Item>
 
 @{
@@ -9,11 +10,20 @@
     @foreach (var @item in Model)
     {
         <div class="card" id="card">
-            <img src="../src/images/Uploaded/Items/2024-03-07 19.25.58.png" alt="">
+            @if (item.Picture != null)
+            {
+
+                <img src="@item.Picture" alt="@item.Name"/>
+            }
+            else
+            {
+            <img src="/src/images/UI/png/placeholder.png" alt="Image not Found">
+
+            }
             <div>
                 <div class="flex-row space-between">
                     <p class="name">
-                       @item.Name
+                        @item.Name
                     </p>
                     <p class="price">
                         @item.Price
@@ -32,7 +42,7 @@
                             <p>details</p>
                         </button>
                     </div>
-                    
+
                 }
             </div>
         </div>
