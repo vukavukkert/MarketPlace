@@ -1,4 +1,5 @@
 ﻿using MarketDataBase.Entities;
+using MarketPlace.Models.ModelInteraction;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,21 +10,30 @@ namespace MarketPlace.Controllers
     public class MarketController : Controller
     {
         private readonly MarketPlaceContext Db;
+        private ItemInteractions items;
         public MarketController(MarketPlaceContext dbcontext)
         {
             Db = dbcontext;
+            items = new ItemInteractions(Db);
         }
         public async Task<IActionResult> Index()
         {
-
-            return View(await Db.Items.ToListAsync());
+            return View(await items.GetAll());
         }
-
+        //get: Market/Search%key=""
         public async Task<IActionResult> Search(string key)
         {
-            if (key.IsNullOrEmpty()) RedirectToAction(nameof(Index));
-            var items = await Db.Items.Where(x => x.Name.Contains(key)).ToListAsync();
-            return View(nameof(Index), items);
+            try
+            {
+                if (key.IsNullOrEmpty()) RedirectToAction(nameof(Index));
+                return View(nameof(Index), await items.GetAll(key));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return BadRequest();
+            }
+
         }
         //get: Market/Create
         public async Task<IActionResult> Create()
@@ -36,69 +46,59 @@ namespace MarketPlace.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(IFormFile photo, Item item)
         {
-
-            if (photo.Length > 0)
+            try
             {
-                var fileName = Path.GetFileName(photo.FileName);
-                var serverPath = "/src/images/Uploaded/Items/";
-                var path = Path.Combine(Environment.CurrentDirectory + "/wwwroot" + serverPath, fileName);
-                using (var fileStream = new FileStream(path, FileMode.Create))
+                if (photo.Length > 0)
                 {
-                    await photo.CopyToAsync((fileStream));
-                }
+                    var fileName = Path.GetFileName(photo.FileName);
+                    var serverPath = "/src/images/Uploaded/Items/";
+                    var path = Path.Combine(Environment.CurrentDirectory + "/wwwroot" + serverPath, fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await photo.CopyToAsync(fileStream);
+                    }
 
-                item.Picture = serverPath + fileName;
+                    item.Picture = serverPath + fileName;
+                }
+                await items.Create(item);
+                return RedirectToAction("Index");
             }
-            Db.Items.Add(item);
-            await Db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return BadRequest();
+            }
         }
         //get: Market/Deatails
         public async Task<IActionResult> Details(int? id)
         {
-            var item = await Db.Items.FirstOrDefaultAsync(x => x.Id == id);
-            if (item != null)
+            try
             {
+                var item = await items.Read(id);
                 ViewBag.VendorName = await Db.Vendors.Where(x => x.Id == item.Vendor).Select(v => v.Name).FirstOrDefaultAsync();
                 return View(item);
             }
-            else
+            catch (Exception e)
             {
+                Console.WriteLine(e.ToString());
                 return RedirectToAction(nameof(Index));
-
             }
+
         }
         [HttpPost]
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            try
             {
+                var item = await items.Read(id);
+                await items.Delete(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
                 return NotFound();
             }
-
-            var item = await Db.Items.FirstOrDefaultAsync(m => m.Id == id);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            var orders = await Db.Orders.Where(x => x.Item == item.Id).ToListAsync();
-            if (!orders.IsNullOrEmpty())
-            {
-                foreach (var order in orders)
-                {
-                    var points = await Db.PickupPointOrders.Where(x => x.Order == order.Id).ToListAsync();
-                    foreach (var point in points)
-                    {
-                        Db.PickupPointOrders.Remove(point);
-                    }
-                    Db.Orders.Remove(order);
-
-                }
-            }
-
-            Db.Items.Remove(item);
-            await Db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
 

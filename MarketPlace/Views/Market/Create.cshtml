@@ -1,29 +1,9 @@
 ﻿@model MarketDataBase.Entities.Item
 
+@{
+    ViewData["Title"] = "GAZON";
+}
 
-@* <div class="row">
-    <div class="col-md-4">
-        @using (Html.BeginForm("Create", "Market", FormMethod.Post))
-        {
-            <div class="form-group">
-                @Html.LabelFor(Model => Model.Name)
-                @Html.TextBoxFor(Model => Model.Name)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(Model => Model.Description)
-                @Html.TextBoxFor(Model => Model.Description)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(Model => Model.Vendor)
-                @Html.DropDownList("VendorId", ViewBag.Vendors as SelectList, "Select a Vendor")
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        }
-        
-    </div>
-</div> *@
 <div class="flex-column center">
     <h1>Create item</h1>
     @using (Html.BeginForm("Create", "Market", FormMethod.Post, 

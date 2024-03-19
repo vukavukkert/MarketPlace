@@ -1,0 +1,41 @@
+﻿@model IEnumerable<MarketDataBase.Entities.PickupPoint>
+
+@{
+    ViewData["Title"] = "GAZON";
+}
+<div class="points">
+@foreach(var point in Model)
+{
+    <div class="flex-column center">
+        <div class="point">
+            @if (point.Picture == null)
+                {
+                    <img src="src/images/Uploaded/Points/gazon_good.jpg" alt="">
+                }
+             else{
+                    <img src="@point.Picture" alt="@point.Address">
+             }
+            
+            <div class="flex-row space-between">
+                <div class="flex-column center left">
+                    <p>GAZON PICK UP POINT</p>
+                    <p id="rating">@point.Rating</p>
+                </div>
+
+                <div class="flex-column center right">
+                    <p id="adress">@point.Address</p>
+
+                    @using (Html.BeginForm("Employees", "Points"))
+                    {
+                        <input type="hidden" name="id" value="@point.Id" />
+                        <button type="submit" class="button">
+                            details
+                        </button>
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+</div>

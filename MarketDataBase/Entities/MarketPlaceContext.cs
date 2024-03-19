@@ -60,7 +60,8 @@ public partial class MarketPlaceContext : DbContext
 
             entity.HasOne(d => d.VendorNavigation).WithMany(p => p.Items)
                 .HasForeignKey(d => d.Vendor)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(true)
                 .HasConstraintName("FK_ITEM_VENDOR");
         });
 
@@ -79,7 +80,7 @@ public partial class MarketPlaceContext : DbContext
 
             entity.HasOne(d => d.ItemNavigation).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.Item)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_ORDER_ITEM");
 
             entity.HasOne(d => d.PickupPointNavigation).WithMany(p => p.Orders)
@@ -102,7 +103,7 @@ public partial class MarketPlaceContext : DbContext
                 .HasMaxLength(30)
                 .HasColumnName("ADDRESS");
             entity.Property(e => e.Picture)
-                .HasMaxLength(1)
+                .HasColumnType("NVARCHAR(MAX)")
                 .HasColumnName("PICTURE");
             entity.Property(e => e.Rating)
                 .HasColumnType("decimal(2, 1)")
@@ -125,7 +126,7 @@ public partial class MarketPlaceContext : DbContext
 
             entity.HasOne(d => d.OrderNavigation).WithMany(p => p.PickupPointOrders)
                 .HasForeignKey(d => d.Order)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_PICKUP_POINT_ORDER_ORDER");
 
             entity.HasOne(d => d.PickupPointNavigation).WithMany(p => p.PickupPointOrders)

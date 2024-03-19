@@ -14,7 +14,7 @@
 <body>
 <div class="header flex-row center space-around ">
     <div id="Logo">
-        <a href="Index">
+        <a asp-action="Index" asp-controller="Market">
             <img src="../src/images/UI/svg/GAZON.svg" alt="Gazon logo">
         </a>
     </div>
@@ -29,10 +29,19 @@
     </div>
     <div class="nav">
         <button>
-            <img src="../src/images/UI/svg/Profile.svg" alt="Profile">
+            <a asp-action="Index" asp-controller="Auth">
+                <img src="../src/images/UI/svg/Profile.svg" alt="Profile">
+            </a>
         </button>
         <button>
-            <img src="../src/images/UI/svg/Point.svg" alt="Point">
+                <a asp-action="Index" asp-controller="Points">
+                    <img src="../src/images/UI/svg/Point.svg" alt="Point">
+                </a>
+        </button>
+        <button>
+                <a asp-action="Create" asp-controller="Market">
+                    <img src="../src/images/UI/svg/Add.svg" alt="Point">
+                </a>
         </button>
     </div>
 </div>

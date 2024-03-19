@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MarketDataBase.Entities.Staff>
+
+@{
+
+}
+
+<div class="flex-column center">
+    <div class="point-details">
+        @if (ViewBag.Point.Picture != null)
+        {
+
+            <img class="point-img" src="../@ViewBag.Point.Picture" />
+        }
+        else
+        {
+            <img class="point-img" src="../src/images/Uploaded/Points/gazon_good.jpg" alt="">
+            }
+        <div class="flex-row">
+            <div>
+                <p>GAZON POINT</p>
+                <p id="rating">@ViewBag.Point.Rating</p>
+                <p id="adress">@ViewBag.Point.Address</p>
+            </div>
+
+            <div>
+                <p id="statistics">
+                    Orders sold: 2 <br>
+                    Employed: 2 <br>
+                    Items sold: 4 <br>
+                    Last pickup date: 07.03.24
+                </p>
+            </div>
+        </div>
+        <div class="flex-column center">
+            <div class="employees">
+                @foreach (var staff in Model)
+                {
+                    <div class="employee">
+                        <img class="img" src="../src/images/UI/png/placeholder.png" alt="">
+                        <div>
+                            @if (staff.UserNavigation == null)
+                            {
+                                <p class="name"> Employee</p>
+                            }
+                            else
+                            {
+                                <p class="name"> @staff.UserNavigation.Name</p>
+                            }
+                            }
+
+                            <p id="rating">@staff.Rating</p>
+                            <p id="statistics">
+                                Orders sold:@*  @staff.PickupPointNavigation.PickupPointOrders.Count() *@ <br>
+                                Last pickup date: @* @staff.PickupPointNavigation.PickupPointOrders.Last().PickupDate *@
+                            </p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+</div>
