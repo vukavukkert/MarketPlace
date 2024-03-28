@@ -20,19 +20,15 @@
 
             }
             <div>
-                <div class="flex-row space-between">
                     <p class="name">
                         @item.Name
                     </p>
                     <p class="price">
-                        @item.Price
+                        @decimal.Round(item.Price, 0, MidpointRounding.AwayFromZero)
                     </p>
-                </div>
-                <div>
                     <p class="description">
                         @item.Description
                     </p>
-                </div>
                 @using (Html.BeginForm("Details", "Market"))
                 {
                     <input type="hidden" name="id" value="@item.Id"/>
@@ -45,5 +41,4 @@
             </div>
         </div>
     }
-   
 </div>

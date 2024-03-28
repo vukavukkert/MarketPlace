@@ -1,18 +1,31 @@
-﻿@model MarketDataBase.Entities.User
+﻿@using  System.Security.Claims
+@model MarketDataBase.Entities.User
+
 
 @{
     ViewData["Title"] = "GAZON";
 }
 
 <div class="flex-column center">
-    <div class="auth-form shadow">
-        <form action="">
-            <div class="flex-column center">
-                <p>Welcome back!</p>
-                <input type="text" placeholder="Login" class="input">
-                <input type="password" placeholder="Password" class="input">
-                <button class="button"><P>Log in</P></button>
-            </div>
-        </form>
-    </div>
+    @if(User == null)
+    {
+        <div class="auth-form shadow">
+            <form asp-action="Index" asp-controller="Auth">
+                <div class="flex-column center">
+                    <p>Welcome back!</p>
+                    <input type="text" placeholder="Login" name="login" class="input">
+                    <input type="password" placeholder="Password" name="password" class="input">
+                    <button class="button" type="submit"><P>Log in</P></button>
+                </div>
+            </form>
+        </div>
+    }
+    @if (User != null)
+    {
+        <p>Welcome @User.Identity!.Name, your role is @User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value.</p>
+
+
+        <a style="text-decoration: underline; cursor: pointer;">Log out</a>
+    }
+
 </div>

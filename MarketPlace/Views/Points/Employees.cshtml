@@ -1,7 +1,34 @@
-﻿@model IEnumerable<MarketDataBase.Entities.Staff>
+﻿@using MarketDataBase.Entities
+@using Microsoft.EntityFrameworkCore
+@using System
+
+@model IEnumerable<MarketDataBase.Entities.Staff>
 
 @{
+    PickupPoint point = ViewBag.Point;
 
+    string GetStatistic(Staff staff)
+    {
+        var ordersSold = staff.PickupPointOrders.Count();
+
+        var ItemsSold = staff.PickupPointOrders
+        .Select(o => o.OrderNavigation)
+        .Count();
+
+        var lastPickUpDate = staff
+                            .PickupPointOrders
+                            .ToList()
+                            .Count != 0
+        ?
+                            staff
+                            .PickupPointOrders
+                            .Last().PickupDate
+                            .ToString()!.Remove(10, 9)
+        : "None";
+
+        return $"Orders sold: {ordersSold} \r\n Items sold: {ItemsSold} \n Last pickup date: {lastPickUpDate}";
+
+    }
 }
 
 <div class="flex-column center">
@@ -9,7 +36,7 @@
         @if (ViewBag.Point.Picture != null)
         {
 
-            <img class="point-img" src="../@ViewBag.Point.Picture" />
+            <img class="point-img" src="../@point.Picture" />
         }
         else
         {
@@ -18,16 +45,16 @@
         <div class="flex-row">
             <div>
                 <p>GAZON POINT</p>
-                <p id="rating">@ViewBag.Point.Rating</p>
-                <p id="adress">@ViewBag.Point.Address</p>
+                <p id="rating">@point.Rating</p>
+                <p id="adress">@point.Address</p>
             </div>
 
             <div>
                 <p id="statistics">
-                    Orders sold: 2 <br>
-                    Employed: 2 <br>
-                    Items sold: 4 <br>
-                    Last pickup date: 07.03.24
+                    Orders sold: @point.PickupPointOrders.Count() <br>
+                    Employed: @point.Staff.Count() <br>
+                    Items sold: @point.Orders.Count()  <br>
+                    Last pickup date: @point.PickupPointOrders.Last().PickupDate.ToString().Remove(10,9)
                 </p>
             </div>
         </div>
@@ -40,19 +67,18 @@
                         <div>
                             @if (staff.UserNavigation == null)
                             {
-                                <p class="name"> Employee</p>
+                                <p class="name"> Employee </p>
                             }
                             else
                             {
                                 <p class="name"> @staff.UserNavigation.Name</p>
                             }
-                            }
 
                             <p id="rating">@staff.Rating</p>
                             <p id="statistics">
-                                Orders sold:@*  @staff.PickupPointNavigation.PickupPointOrders.Count() *@ <br>
-                                Last pickup date: @* @staff.PickupPointNavigation.PickupPointOrders.Last().PickupDate *@
-                            </p>
+                                id: @staff.Id <br/>
+                                @GetStatistic(staff)
+                                </p>
                         </div>
                     </div>
                 }

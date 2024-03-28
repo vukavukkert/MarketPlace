@@ -1,5 +1,6 @@
 ﻿using MarketDataBase.Entities;
 using MarketPlace.Models.ModelInteraction;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,7 @@ namespace MarketPlace.Controllers
 
         }
         //get: Market/Create
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             var vendors = await Db.Vendors.ToListAsync();
@@ -43,6 +45,7 @@ namespace MarketPlace.Controllers
             return View();
         }
         //post: Market/Create
+        [Authorize(Roles = "1")]
         [HttpPost]
         public async Task<IActionResult> Create(IFormFile photo, Item item)
         {
@@ -85,6 +88,7 @@ namespace MarketPlace.Controllers
             }
 
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Delete(int? id)
         {

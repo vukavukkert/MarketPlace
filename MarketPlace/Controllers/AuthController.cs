@@ -1,15 +1,20 @@
 ﻿using MarketDataBase.Entities;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace MarketPlace.Controllers
 {
     public class AuthController : Controller
     {
         private readonly MarketPlaceContext _context;
+        private readonly IConfiguration _configuration;
 
-        public AuthController(MarketPlaceContext context)
+        public AuthController(MarketPlaceContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         // GET: Auth
@@ -18,10 +23,26 @@ namespace MarketPlace.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Index(User user)
+        public async Task<IActionResult> Index(string login, string password)
         {
-            //code
-            return View();
+            var user = await _context.Users.Where(x => x.Login == login).FirstOrDefaultAsync();
+            if (user.Password == password)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.RoleNavigation.Name)
+    };
+                var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                await HttpContext.SignInAsync(claimsPrincipal);
+                return Ok();
+            }
+            else
+            {
+                return Unauthorized();
+            }
+
         }
 
         /*    // GET: Auth/Details/5

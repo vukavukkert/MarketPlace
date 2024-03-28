@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MarketDataBase.Entities.PickupPoint>
+﻿@using System
+@model IEnumerable<MarketDataBase.Entities.PickupPoint>
 
 @{
     ViewData["Title"] = "GAZON";
@@ -21,18 +22,12 @@
                     <p>GAZON PICK UP POINT</p>
                     <p id="rating">@point.Rating</p>
                 </div>
-
                 <div class="flex-column center right">
                     <p id="adress">@point.Address</p>
-
-                    @using (Html.BeginForm("Employees", "Points"))
-                    {
+                    <form asp-controller="Points" asp-action="Employees" method="get">
                         <input type="hidden" name="id" value="@point.Id" />
-                        <button type="submit" class="button">
-                            details
-                        </button>
-
-                    }
+                        <button type="submit" class="button">details</button>
+                    </form>
                 </div>
             </div>
         </div>

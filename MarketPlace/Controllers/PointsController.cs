@@ -1,5 +1,6 @@
 ﻿using MarketDataBase.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MarketPlace.Controllers
 {
@@ -11,15 +12,15 @@ namespace MarketPlace.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_context.PickupPoints.ToList());
+            return View(await _context.PickupPoints.ToListAsync());
         }
-        public IActionResult Employees(int? id)
+        public async Task<IActionResult> Employees(int? id)
         {
-            var staff = _context.Staff.Where(s => s.PickupPoint == id)
-                .ToList();
-            ViewBag.Point = _context.PickupPoints.FirstOrDefault(p => p.Id == id);
+            var staff = await _context.Staff.Where(s => s.PickupPoint == id)
+                .ToListAsync();
+            ViewBag.Point = await _context.PickupPoints.FirstOrDefaultAsync(p => p.Id == id);
             return View(staff);
         }
     }
