@@ -32,13 +32,16 @@
         <p class="description">
             @Model.Description
         </p>
-        @using (@Html.BeginForm("Delete", "Market", FormMethod.Post))
+        @if (User.IsInRole("Admin"))
         {
-            @Html.HiddenFor(Model => Model.Id)
-            <input type="submit" style="text-decoration: underline;color: darkred;" value="Delete">
+            @using (@Html.BeginForm("Delete", "Market", FormMethod.Post))
+            {
+                @Html.HiddenFor(Model => Model.Id)
+                <input type="submit" style="text-decoration: underline;color: darkred;" value="Delete">
+            }
+            <a href="" style="text-decoration: underline;">Edit</a>
+
         }
-        @* <a asp-action="Delete" asp-controller="Market" asp-route-id="@Model.Id" style="text-decoration: underline;">Delete</a> *@
-        <a href="" style="text-decoration: underline;">Edit</a>
     </div>
 
 </div>

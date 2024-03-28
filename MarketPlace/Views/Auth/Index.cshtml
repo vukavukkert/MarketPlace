@@ -7,7 +7,7 @@
 }
 
 <div class="flex-column center">
-    @if(User == null)
+    @if (!this.User.Identity!.IsAuthenticated)
     {
         <div class="auth-form shadow">
             <form asp-action="Index" asp-controller="Auth">
@@ -20,12 +20,12 @@
             </form>
         </div>
     }
-    @if (User != null)
+    @if (this.User.Identity!.IsAuthenticated)
     {
         <p>Welcome @User.Identity!.Name, your role is @User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value.</p>
 
 
-        <a style="text-decoration: underline; cursor: pointer;">Log out</a>
+        <a style="text-decoration: underline; cursor: pointer;" asp-action="LogOut" asp-controller="Auth">Log out</a>
     }
 
 </div>
